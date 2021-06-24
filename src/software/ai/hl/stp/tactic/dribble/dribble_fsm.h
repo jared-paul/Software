@@ -169,7 +169,7 @@ struct DribbleFSM
          */
         const auto have_possession = [](auto event) {
             return event.common.robot.isNearDribbler(
-                event.common.world.ball().position());
+                event.common.world.ball().position()) || event.common.robot.currentState().breakbeamStatus();
         };
 
         /**
