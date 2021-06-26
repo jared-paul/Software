@@ -169,7 +169,7 @@ struct DribbleFSM
          */
         const auto have_possession = [](auto event) {
             return event.common.robot.isNearDribbler(
-                event.common.world.ball().position());
+                event.common.world.ball().position()) || event.common.robot.currentState().breakbeamStatus();
         };
 
         /**
@@ -182,7 +182,7 @@ struct DribbleFSM
         const auto lost_possession = [](auto event) {
             return !event.common.robot.isNearDribbler(
                 // avoid cases where ball is exactly on the edge fo the robot
-                event.common.world.ball().position(), LOSE_BALL_POSSESSION_THRESHOLD);
+                event.common.world.ball().position(), LOSE_BALL_POSSESSION_THRESHOLD) && !event.common.robot.currentState().breakbeamStatus();
         };
 
         /**
@@ -239,7 +239,7 @@ struct DribbleFSM
                 (ball_position - event.common.robot.position())
                     .orientation();
 
-            auto speed_mode = MaxAllowedSpeedMode::PHYSICAL_LIMIT;
+            auto speed_mode = MaxAllowedSpeedMode::DRIBBLING;
 
             auto intercept_result =
                 findBestInterceptForBall(event.common.world.ball(),
@@ -310,7 +310,7 @@ struct DribbleFSM
                 event.common.robot.id(), target_destination, target_orientation, 0,
                 DribblerMode::MAX_FORCE, BallCollisionType::ALLOW,
                 AutoChipOrKick{AutoChipOrKickMode::OFF, 0},
-                MaxAllowedSpeedMode::PHYSICAL_LIMIT, 0.0,
+                MaxAllowedSpeedMode::DRIBBLING, 0.0,
                 event.common.robot.robotConstants()));
         };
 

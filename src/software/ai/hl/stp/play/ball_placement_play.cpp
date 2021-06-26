@@ -182,7 +182,7 @@ void BallPlacementPlay::getNextTactics(TacticCoroutine::push_type &yield,
     }
 
     //TODO DONT LOOK PLEASE
-    if (distance(world.ball().position(), world.gameState().getBallPlacementPoint().value()) < 1) {
+    if (distance(world.ball().position(), world.gameState().getBallPlacementPoint().value()) < 10) {
         do {
             if (robot.has_value()) {
                 if (world.gameState().getBallPlacementPoint().has_value()) {
@@ -194,7 +194,7 @@ void BallPlacementPlay::getNextTactics(TacticCoroutine::push_type &yield,
                         move_away_tactic->updateControlParams(last_waiting_point, Angle::zero(), 0.0);
 
                         CIRCLE_SHIT_YIELD({move_away_tactic});
-                    } else if (distance(world.ball().position(), world.gameState().getBallPlacementPoint().value()) < 1) {
+                    } else if (distance(world.ball().position(), world.gameState().getBallPlacementPoint().value()) < 10) {
                         do {
 
                             LOG (DEBUG) << "dribbling 2";
